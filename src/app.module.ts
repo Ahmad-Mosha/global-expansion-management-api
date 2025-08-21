@@ -6,6 +6,7 @@ import { ClientsModule } from './clients/clients.module';
 import { VendorsModule } from './vendors/vendors.module';
 import { MatchesModule } from './matches/matches.module';
 import { AnalyticsModule } from './analytics/analytics.module';
+import { DocumentsModule } from './documents/documents.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AnalyticsModule } from './analytics/analytics.module';
     VendorsModule,
     MatchesModule,
     AnalyticsModule,
+    DocumentsModule,
   ],
   controllers: [],
   providers: [],
