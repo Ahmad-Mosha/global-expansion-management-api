@@ -59,8 +59,9 @@ export class DocumentsService {
       ];
     }
 
-    if (searchDto.tags && searchDto.tags.length > 0) {
-      query.tags = { $in: searchDto.tags };
+    if (searchDto.tags && searchDto.tags.trim().length > 0) {
+      const tagsArray = searchDto.tags.split(',').map((tag) => tag.trim());
+      query.tags = { $in: tagsArray };
     }
 
     return this.documentModel.find(query).exec();

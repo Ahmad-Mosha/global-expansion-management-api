@@ -1,4 +1,4 @@
-import { IsString, IsArray, IsOptional, IsUUID } from 'class-validator';
+import { IsString, IsOptional, IsUUID } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class SearchDocumentDto {
@@ -12,9 +12,12 @@ export class SearchDocumentDto {
   @IsString()
   text?: string;
 
-  @ApiProperty({ example: ['market', 'research'], required: false })
+  @ApiProperty({
+    example: 'market,research',
+    required: false,
+    description: 'Comma-separated tags (e.g., "market,research,analysis")',
+  })
   @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  tags?: string[];
+  @IsString()
+  tags?: string;
 }
