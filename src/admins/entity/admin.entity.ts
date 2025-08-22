@@ -1,18 +1,16 @@
-import { Project } from 'src/projects/entity/project.entity';
 import { User } from 'src/users/entity/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToMany,
   OneToOne,
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('clients')
-export class Client {
+@Entity('admins')
+export class Admin {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,14 +18,8 @@ export class Client {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column()
-  company_name: string;
-
-  @Column({ unique: true })
-  contact_email: string;
-
-  @OneToMany(() => Project, (project) => project.client)
-  projects: Project[];
+  @Column('simple-array', { default: '' })
+  permissions: string[];
 
   @CreateDateColumn()
   created_at: Date;

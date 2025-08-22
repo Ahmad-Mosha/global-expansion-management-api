@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { databaseConfig } from './config/database.config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { AdminsModule } from './admins/admins.module';
 import { ProjectsModule } from './projects/projects.module';
 import { ClientsModule } from './clients/clients.module';
 import { VendorsModule } from './vendors/vendors.module';
@@ -23,6 +24,7 @@ import { DocumentsModule } from './documents/documents.module';
     ),
     AuthModule,
     UsersModule,
+    AdminsModule,
     ProjectsModule,
     ClientsModule,
     VendorsModule,
