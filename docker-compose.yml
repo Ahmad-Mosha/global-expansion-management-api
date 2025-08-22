@@ -15,6 +15,7 @@ services:
       - DB_PASSWORD=password
       - DB_DATABASE=expanders360
       - MONGODB_URI=mongodb://mongodb:27017/expanders360_docs
+      - JWT_SECRET=fallback-secret-key
     depends_on:
       - mysql
       - mongodb
