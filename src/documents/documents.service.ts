@@ -28,14 +28,11 @@ export class DocumentsService {
     const filePath = path.join(uploadDir, file.originalname);
     fs.writeFileSync(filePath, file.buffer);
 
-    // Extract text content (simplified - in production you'd use proper text extraction)
-    const content = this.extractTextContent(file);
-
-    // Create document record
+    // Create document record with user-provided content summary
     const document = new this.documentModel({
       projectId: uploadDto.projectId,
       title: uploadDto.title,
-      content,
+      content: uploadDto.content, // User-provided summary/description
       tags: uploadDto.tags || [],
       fileName: file.originalname,
       filePath,
@@ -91,15 +88,5 @@ export class DocumentsService {
       fileName: document.fileName,
       mimeType: document.mimeType,
     };
-  }
-
-  private extractTextContent(file: Express.Multer.File): string {
-    // Simplified text extraction - in production use libraries like pdf-parse, mammoth, etc.
-    if (file.mimetype === 'text/plain') {
-      return file.buffer.toString('utf-8');
-    }
-
-    // For other file types, return filename as searchable content for now
-    return `Document: ${file.originalname}`;
   }
 }

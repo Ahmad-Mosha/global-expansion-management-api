@@ -38,6 +38,10 @@ export class DocumentsController {
           format: 'binary',
         },
         title: { type: 'string' },
+        content: {
+          type: 'string',
+          description: 'Summary or description of the document content',
+        },
         projectId: { type: 'string' },
         tags: {
           type: 'string',
@@ -45,7 +49,7 @@ export class DocumentsController {
             'Comma-separated tags (e.g., "market,research,analysis")',
         },
       },
-      required: ['file', 'title', 'projectId'],
+      required: ['file', 'title', 'content', 'projectId'],
     },
   })
   async uploadDocument(
@@ -55,6 +59,7 @@ export class DocumentsController {
     // Parse form data - tags come as comma-separated string in form data
     const uploadDto: UploadDocumentDto = {
       title: body.title,
+      content: body.content,
       projectId: body.projectId,
       tags: body.tags
         ? body.tags.split(',').map((tag: string) => tag.trim())
