@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { databaseConfig } from './config/database.config';
 import { AuthModule } from './auth/auth.module';
@@ -17,6 +18,9 @@ import { DocumentsModule } from './documents/documents.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(databaseConfig),
+    MongooseModule.forRoot(
+      process.env.MONGODB_URI || 'mongodb://localhost:27017/expanders360_docs',
+    ),
     AuthModule,
     UsersModule,
     ProjectsModule,
