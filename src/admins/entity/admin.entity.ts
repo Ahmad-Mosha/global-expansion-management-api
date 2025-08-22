@@ -2,7 +2,6 @@ import { User } from 'src/users/entity/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
   OneToOne,
   JoinColumn,
   CreateDateColumn,
@@ -17,9 +16,6 @@ export class Admin {
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
-
-  @Column('simple-array', { default: '' })
-  permissions: string[];
 
   @CreateDateColumn()
   created_at: Date;

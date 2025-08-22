@@ -26,7 +26,7 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    const { email, password, companyName } = registerDto;
+    const { email, password, companyName, contactEmail } = registerDto;
 
     // Check if user already exists
     const existingUser = await this.userRepository.findOne({
@@ -36,10 +36,10 @@ export class AuthService {
       throw new ConflictException('User with this email already exists');
     }
 
-    // Validate company name for client registration
-    if (!companyName) {
+    // Validate required fields for client registration
+    if (!companyName || !contactEmail) {
       throw new BadRequestException(
-        'Company name is required for client registration',
+        'Company name and contact email are required for client registration',
       );
     }
 
@@ -55,7 +55,7 @@ export class AuthService {
     const savedUser = await this.userRepository.save(user);
 
     // Create client profile
-    await this.clientsService.create(savedUser.id, companyName, email);
+    await this.clientsService.create(savedUser.id, companyName, contactEmail);
 
     // Generate JWT
     const payload = {
@@ -105,7 +105,7 @@ export class AuthService {
   }
 
   async createAdmin(createAdminDto: CreateAdminDto) {
-    const { email, password, permissions = [] } = createAdminDto;
+    const { email, password } = createAdminDto;
 
     // Check if user already exists
     const existingUser = await this.userRepository.findOne({
@@ -127,7 +127,7 @@ export class AuthService {
     const savedUser = await this.userRepository.save(user);
 
     // Create admin profile
-    await this.adminsService.create(savedUser.id, permissions);
+    await this.adminsService.create(savedUser.id);
 
     return {
       id: savedUser.id,

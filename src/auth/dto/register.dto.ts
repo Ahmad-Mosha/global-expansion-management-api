@@ -1,10 +1,4 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  MinLength,
-  IsOptional,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterDto {
@@ -29,16 +23,15 @@ export class RegisterDto {
     example: 'Acme Corporation',
     description: 'Company name for client registration',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  companyName?: string;
+  companyName: string;
 
   @ApiProperty({
-    example: 'inv_token_123',
-    description: 'Invitation token (if applicable)',
-    required: false,
+    example: 'contact@acme.com',
+    description: 'Company contact email for business communications',
   })
-  @IsOptional()
-  @IsString()
-  invitationToken?: string;
+  @IsEmail()
+  @IsNotEmpty()
+  contactEmail: string;
 }

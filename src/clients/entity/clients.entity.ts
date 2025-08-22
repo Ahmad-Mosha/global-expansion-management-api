@@ -23,7 +23,7 @@ export class Client {
   @Column()
   company_name: string;
 
-  @Column({ unique: true })
+  @Column()
   contact_email: string;
 
   @OneToMany(() => Project, (project) => project.client)

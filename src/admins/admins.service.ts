@@ -17,10 +17,9 @@ export class AdminsService {
     });
   }
 
-  async create(userId: string, permissions: string[] = []): Promise<Admin> {
+  async create(userId: string): Promise<Admin> {
     const admin = this.adminRepository.create({
       user: { id: userId },
-      permissions,
     });
     return this.adminRepository.save(admin);
   }

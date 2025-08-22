@@ -31,7 +31,6 @@ export async function seedAdmin(dataSource: DataSource) {
   // Create admin profile
   const adminProfile = adminRepository.create({
     user: savedUser,
-    permissions: ['manage_vendors', 'system_config', 'manage_users'],
   });
 
   await adminRepository.save(adminProfile);
