@@ -14,7 +14,7 @@ import {
 @Entity('matches')
 @Index(['project_id', 'vendor_id'], { unique: true })
 export class Match {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()

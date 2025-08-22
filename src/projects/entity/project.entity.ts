@@ -20,7 +20,7 @@ export enum ProjectStatus {
 
 @Entity('projects')
 export class Project {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()
