@@ -26,7 +26,7 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    const { email, password, companyName, contactEmail } = registerDto;
+    const { email, password, companyName } = registerDto;
 
     // Check if user already exists
     const existingUser = await this.userRepository.findOne({
@@ -37,9 +37,9 @@ export class AuthService {
     }
 
     // Validate required fields for client registration
-    if (!companyName || !contactEmail) {
+    if (!companyName) {
       throw new BadRequestException(
-        'Company name and contact email are required for client registration',
+        'Company name is required for client registration',
       );
     }
 
@@ -55,7 +55,7 @@ export class AuthService {
     const savedUser = await this.userRepository.save(user);
 
     // Create client profile
-    await this.clientsService.create(savedUser.id, companyName, contactEmail);
+    await this.clientsService.create(savedUser.id, companyName, email);
 
     // Generate JWT
     const payload = {

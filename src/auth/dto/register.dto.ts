@@ -26,12 +26,4 @@ export class RegisterDto {
   @IsNotEmpty()
   @IsString()
   companyName: string;
-
-  @ApiProperty({
-    example: 'contact@acme.com',
-    description: 'Company contact email for business communications',
-  })
-  @IsEmail()
-  @IsNotEmpty()
-  contactEmail: string;
 }
