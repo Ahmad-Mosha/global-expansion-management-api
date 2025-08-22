@@ -27,7 +27,7 @@ export class Project {
   client_id: string;
 
   @ManyToOne(() => Client, (client) => client.projects)
-  @JoinColumn({ name: 'client_id' })
+  @JoinColumn({ name: 'client_id', referencedColumnName: 'user_id' })
   client: Client;
 
   @Column()

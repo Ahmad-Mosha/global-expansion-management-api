@@ -4,7 +4,7 @@ import { Document } from 'mongoose';
 @Schema({ timestamps: true })
 export class DocumentEntity extends Document {
   @Prop({ required: true })
-  projectId: number;
+  projectId: string;
 
   @Prop({ required: true })
   title: string;

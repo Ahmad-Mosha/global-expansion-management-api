@@ -30,7 +30,7 @@ export async function seedAdmin(dataSource: DataSource) {
 
   // Create admin profile
   const adminProfile = adminRepository.create({
-    user: savedUser,
+    user_id: savedUser.id,
   });
 
   await adminRepository.save(adminProfile);
