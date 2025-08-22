@@ -12,14 +12,14 @@ export class AdminsService {
 
   async findByUserId(userId: string): Promise<Admin | null> {
     return this.adminRepository.findOne({
-      where: { user: { id: userId } },
+      where: { user_id: userId },
       relations: ['user'],
     });
   }
 
   async create(userId: string): Promise<Admin> {
     const admin = this.adminRepository.create({
-      user: { id: userId },
+      user_id: userId,
     });
     return this.adminRepository.save(admin);
   }

@@ -12,7 +12,7 @@ export class ClientsService {
 
   async findByUserId(userId: string): Promise<Client | null> {
     return this.clientRepository.findOne({
-      where: { user: { id: userId } },
+      where: { user_id: userId },
       relations: ['user'],
     });
   }
@@ -23,10 +23,24 @@ export class ClientsService {
     contactEmail: string,
   ): Promise<Client> {
     const client = this.clientRepository.create({
-      user: { id: userId },
+      user_id: userId,
       company_name: companyName,
       contact_email: contactEmail,
     });
     return this.clientRepository.save(client);
+  }
+
+  async createForExistingUser(
+    userId: string,
+    companyName: string,
+    contactEmail: string,
+  ): Promise<Client> {
+    // Check if client already exists
+    const existingClient = await this.findByUserId(userId);
+    if (existingClient) {
+      throw new Error('Client profile already exists for this user');
+    }
+
+    return this.create(userId, companyName, contactEmail);
   }
 }

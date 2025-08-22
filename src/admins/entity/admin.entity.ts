@@ -1,7 +1,7 @@
 import { User } from 'src/users/entity/user.entity';
 import {
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToOne,
   JoinColumn,
   CreateDateColumn,
@@ -10,8 +10,8 @@ import {
 
 @Entity('admins')
 export class Admin {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryColumn()
+  user_id: string;
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })

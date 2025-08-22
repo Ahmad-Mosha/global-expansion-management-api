@@ -2,7 +2,7 @@ import { Project } from 'src/projects/entity/project.entity';
 import { User } from 'src/users/entity/user.entity';
 import {
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   Column,
   OneToMany,
   OneToOne,
@@ -13,8 +13,8 @@ import {
 
 @Entity('clients')
 export class Client {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryColumn()
+  user_id: string;
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })

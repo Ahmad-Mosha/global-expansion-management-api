@@ -3,6 +3,9 @@ import { seedAdmin } from './admin.seed';
 import { User } from '../../users/entity/user.entity';
 import { Admin } from '../../admins/entity/admin.entity';
 import { Client } from '../../clients/entity/clients.entity';
+import { Project } from '../../projects/entity/project.entity';
+import { Vendor } from '../../vendors/entity/vendor.entity';
+import { Match } from '../../matches/entity/match.entity';
 
 async function runSeeds() {
   const dataSource = new DataSource({
@@ -12,7 +15,7 @@ async function runSeeds() {
     username: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || 'password',
     database: process.env.DB_DATABASE || 'expanders360',
-    entities: [User, Admin, Client],
+    entities: [User, Admin, Client, Project, Vendor, Match],
     synchronize: true,
   });
 
