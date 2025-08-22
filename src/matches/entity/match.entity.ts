@@ -15,17 +15,17 @@ import {
 @Index(['project_id', 'vendor_id'], { unique: true })
 export class Match {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
-  project_id: number;
+  project_id: string;
 
   @ManyToOne(() => Project, (project) => project.matches)
   @JoinColumn({ name: 'project_id' })
   project: Project;
 
   @Column()
-  vendor_id: number;
+  vendor_id: string;
 
   @ManyToOne(() => Vendor, (vendor) => vendor.matches)
   @JoinColumn({ name: 'vendor_id' })

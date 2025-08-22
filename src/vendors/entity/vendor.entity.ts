@@ -11,7 +11,7 @@ import {
 @Entity('vendors')
 export class Vendor {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   name: string;

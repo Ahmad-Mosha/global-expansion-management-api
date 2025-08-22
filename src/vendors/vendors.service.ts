@@ -23,7 +23,7 @@ export class VendorsService {
     });
   }
 
-  async findOne(id: number): Promise<Vendor> {
+  async findOne(id: string): Promise<Vendor> {
     const vendor = await this.vendorRepository.findOne({
       where: { id },
     });
@@ -35,14 +35,14 @@ export class VendorsService {
     return vendor;
   }
 
-  async update(id: number, updateVendorDto: UpdateVendorDto): Promise<Vendor> {
+  async update(id: string, updateVendorDto: UpdateVendorDto): Promise<Vendor> {
     const vendor = await this.findOne(id);
 
     Object.assign(vendor, updateVendorDto);
     return this.vendorRepository.save(vendor);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const vendor = await this.findOne(id);
     await this.vendorRepository.remove(vendor);
   }

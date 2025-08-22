@@ -74,7 +74,7 @@ export class VendorsController {
   })
   @ApiResponse({ status: 404, description: 'Vendor not found' })
   async findOne(@Param('id') id: string) {
-    return this.vendorsService.findOne(+id);
+    return this.vendorsService.findOne(id);
   }
 
   @Patch(':id')
@@ -94,7 +94,7 @@ export class VendorsController {
     @Param('id') id: string,
     @Body() updateVendorDto: UpdateVendorDto,
   ) {
-    return this.vendorsService.update(+id, updateVendorDto);
+    return this.vendorsService.update(id, updateVendorDto);
   }
 
   @Delete(':id')
@@ -107,7 +107,7 @@ export class VendorsController {
   @ApiResponse({ status: 403, description: 'Forbidden - Admin role required' })
   @ApiResponse({ status: 404, description: 'Vendor not found' })
   async remove(@Param('id') id: string) {
-    await this.vendorsService.remove(+id);
+    await this.vendorsService.remove(id);
     return { message: 'Vendor deleted successfully' };
   }
 }
