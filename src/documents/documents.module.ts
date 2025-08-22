@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { DocumentsService } from './documents.service';
-import { DocumentsController } from './documents.controller';
-import { DocumentEntity, DocumentSchema } from './schemas/document.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { DocumentsController } from './documents.controller';
+import { DocumentsService } from './documents.service';
+import { DocumentEntity, DocumentSchema } from './schemas/document.schema';
 
 @Module({
   imports: [
@@ -10,7 +10,8 @@ import { MongooseModule } from '@nestjs/mongoose';
       { name: DocumentEntity.name, schema: DocumentSchema },
     ]),
   ],
-  providers: [DocumentsService],
   controllers: [DocumentsController],
+  providers: [DocumentsService],
+  exports: [DocumentsService],
 })
 export class DocumentsModule {}

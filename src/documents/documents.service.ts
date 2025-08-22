@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { DocumentEntity } from './schema/document.schema';
+import { DocumentEntity } from './schemas/document.schema';
 import { UploadDocumentDto } from './dto/upload-document.dto';
 import { SearchDocumentDto } from './dto/search-document.dto';
 import * as fs from 'fs';
@@ -41,10 +41,6 @@ export class DocumentsService {
       filePath,
       fileSize: file.size,
       mimeType: file.mimetype,
-      metadata: {
-        country: uploadDto.country,
-        documentType: uploadDto.documentType,
-      },
     });
 
     return document.save();
@@ -68,14 +64,6 @@ export class DocumentsService {
 
     if (searchDto.tags && searchDto.tags.length > 0) {
       query.tags = { $in: searchDto.tags };
-    }
-
-    if (searchDto.country) {
-      query['metadata.country'] = searchDto.country;
-    }
-
-    if (searchDto.documentType) {
-      query['metadata.documentType'] = searchDto.documentType;
     }
 
     return this.documentModel.find(query).exec();

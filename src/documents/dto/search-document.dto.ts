@@ -17,14 +17,4 @@ export class SearchDocumentDto {
   @IsArray()
   @IsString({ each: true })
   tags?: string[];
-
-  @ApiProperty({ example: 'USA', required: false })
-  @IsOptional()
-  @IsString()
-  country?: string;
-
-  @ApiProperty({ example: 'market-report', required: false })
-  @IsOptional()
-  @IsString()
-  documentType?: string;
 }

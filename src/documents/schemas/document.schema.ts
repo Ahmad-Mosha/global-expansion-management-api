@@ -19,20 +19,13 @@ export class DocumentEntity extends Document {
   fileName: string;
 
   @Prop()
+  filePath: string;
+
+  @Prop()
   fileSize: number;
 
   @Prop()
   mimeType: string;
-
-  @Prop({
-    type: Object,
-    default: {},
-  })
-  metadata: {
-    country?: string;
-    documentType?: string;
-    [key: string]: any;
-  };
 }
 
 export const DocumentSchema = SchemaFactory.createForClass(DocumentEntity);

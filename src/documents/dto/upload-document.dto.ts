@@ -15,14 +15,4 @@ export class UploadDocumentDto {
   @IsArray()
   @IsString({ each: true })
   tags?: string[];
-
-  @ApiProperty({ example: 'USA' })
-  @IsOptional()
-  @IsString()
-  country?: string;
-
-  @ApiProperty({ example: 'market-report' })
-  @IsOptional()
-  @IsString()
-  documentType?: string;
 }
