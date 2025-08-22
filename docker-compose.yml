@@ -14,8 +14,10 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=password
       - DB_DATABASE=expanders360
+      - MONGODB_URI=mongodb://mongodb:27017/expanders360_docs
     depends_on:
       - mysql
+      - mongodb
 
   mysql:
     image: mysql:8.0
