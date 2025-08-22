@@ -1,10 +1,7 @@
-import { Client } from 'src/clients/entity/clients.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -17,9 +14,9 @@ export enum UserRole {
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -31,10 +28,6 @@ export class User {
     default: UserRole.CLIENT,
   })
   role: UserRole;
-
-  @ManyToOne(() => Client, { nullable: true })
-  @JoinColumn({ name: 'client_id' })
-  client: Client;
 
   @CreateDateColumn()
   created_at: Date;
