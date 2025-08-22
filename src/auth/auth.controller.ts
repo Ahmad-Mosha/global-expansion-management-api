@@ -11,10 +11,8 @@ import { RegisterDto } from './dto/register.dto';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { AuthResponseDto, UserResponseDto } from './dto/auth-response.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { RolesGuard } from './guards/roles.guard';
-import { Roles } from './decorators/roles.decorator';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { UserRole, User } from '../users/entity/user.entity';
+import { User } from '../users/entity/user.entity';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -47,8 +45,6 @@ export class AuthController {
   }
 
   @Post('admin')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new admin user (Admin only)' })
   @ApiResponse({
