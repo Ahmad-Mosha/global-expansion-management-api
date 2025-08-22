@@ -80,28 +80,4 @@ export class ProjectsService {
     const project = await this.findOne(id, userId);
     await this.projectRepository.remove(project);
   }
-
-  async findByStatus(status: string, userId: string): Promise<Project[]> {
-    const client = await this.clientsService.findByUserId(userId);
-    if (!client) {
-      throw new ForbiddenException('User is not associated with a client');
-    }
-
-    return this.projectRepository.find({
-      where: { client_id: userId, status: status as any },
-      order: { created_at: 'DESC' },
-    });
-  }
-
-  async findByCountry(country: string, userId: string): Promise<Project[]> {
-    const client = await this.clientsService.findByUserId(userId);
-    if (!client) {
-      throw new ForbiddenException('User is not associated with a client');
-    }
-
-    return this.projectRepository.find({
-      where: { client_id: userId, country },
-      order: { created_at: 'DESC' },
-    });
-  }
 }

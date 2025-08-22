@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   UseGuards,
-  Query,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -57,17 +56,7 @@ export class ProjectsController {
     description: 'List of client projects',
     type: [ProjectResponseDto],
   })
-  async findAll(
-    @CurrentUser() user: User,
-    @Query('status') status?: string,
-    @Query('country') country?: string,
-  ) {
-    if (status) {
-      return this.projectsService.findByStatus(status, user.id);
-    }
-    if (country) {
-      return this.projectsService.findByCountry(country, user.id);
-    }
+  async findAll(@CurrentUser() user: User) {
     return this.projectsService.findAllByClient(user.id);
   }
 
