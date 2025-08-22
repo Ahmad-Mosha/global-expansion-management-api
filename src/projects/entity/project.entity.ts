@@ -20,11 +20,11 @@ export enum ProjectStatus {
 
 @Entity('projects')
 export class Project {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
-  client_id: number;
+  client_id: string;
 
   @ManyToOne(() => Client, (client) => client.projects)
   @JoinColumn({ name: 'client_id' })

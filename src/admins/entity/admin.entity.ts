@@ -10,8 +10,8 @@ import {
 
 @Entity('admins')
 export class Admin {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })

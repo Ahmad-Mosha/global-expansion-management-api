@@ -10,8 +10,8 @@ import {
 
 @Entity('vendors')
 export class Vendor {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;
