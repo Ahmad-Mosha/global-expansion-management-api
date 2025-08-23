@@ -1,5 +1,8 @@
 import { DataSource } from 'typeorm';
 import { seedAdmin } from './admin.seed';
+import { seedClients } from './clients.seed';
+import { seedVendors } from './vendors.seed';
+import { seedProjects } from './projects.seed';
 import { User } from '../../users/entity/user.entity';
 import { Admin } from '../../admins/entity/admin.entity';
 import { Client } from '../../clients/entity/clients.entity';
@@ -23,11 +26,27 @@ async function runSeeds() {
     await dataSource.initialize();
     console.log('Database connected for seeding');
 
-    await seedAdmin(dataSource);
+    // Quick check if data already exists
+    const userRepository = dataSource.getRepository(User);
+    const existingUsers = await userRepository.count();
 
-    console.log('All seeds completed successfully');
+    if (existingUsers > 0) {
+      console.log('Database already seeded, skipping...');
+      return;
+    }
+
+    console.log('=== Seeding Database ===');
+
+    await seedAdmin(dataSource);
+    await seedVendors(dataSource);
+    await seedClients(dataSource);
+    await seedProjects(dataSource);
+
+    console.log('=== Seeding completed ===');
+    console.log('Login: admin@expanders360.com / admin123456');
+    console.log('Client: john.smith@techcorp.com / client123456');
   } catch (error) {
-    console.error('Error running seeds:', error);
+    console.error('Seeding error:', error);
   } finally {
     await dataSource.destroy();
   }

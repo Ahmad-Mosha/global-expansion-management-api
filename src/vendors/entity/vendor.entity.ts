@@ -1,4 +1,4 @@
-import { Match } from 'src/matches/entity/match.entity';
+import { Match } from '../../matches/entity/match.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -22,7 +22,7 @@ export class Vendor {
   @Column('json')
   services_offered: string[];
 
-  @Column('decimal', { precision: 2, scale: 1, default: 0 })
+  @Column('decimal', { precision: 3, scale: 1, default: 0 })
   rating: number;
 
   @Column({ default: 24 })

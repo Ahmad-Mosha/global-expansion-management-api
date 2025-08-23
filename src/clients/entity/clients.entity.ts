@@ -1,5 +1,5 @@
-import { Project } from 'src/projects/entity/project.entity';
-import { User } from 'src/users/entity/user.entity';
+import { Project } from '../../projects/entity/project.entity';
+import { User } from '../../users/entity/user.entity';
 import {
   Entity,
   PrimaryColumn,
