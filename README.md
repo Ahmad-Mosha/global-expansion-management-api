@@ -1,73 +1,667 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# 🌍 Global Expansion Management API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A comprehensive NestJS-based API for managing global business expansion projects, vendor relationships, and intelligent matching systems with real-time notifications and analytics.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📋 Table of Contents
 
-## Description
+- [🌍 Global Expansion Management API](#-global-expansion-management-api)
+  - [📋 Table of Contents](#-table-of-contents)
+  - [🚀 Features](#-features)
+  - [🏗️ Architecture](#️-architecture)
+  - [🛠️ Tech Stack](#️-tech-stack)
+  - [📦 Installation](#-installation)
+  - [🔧 Configuration](#-configuration)
+  - [🚀 Running the Application](#-running-the-application)
+  - [🗄️ Database Setup](#️-database-setup)
+  - [🔐 Authentication & Authorization](#-authentication--authorization)
+  - [📊 API Endpoints](#-api-endpoints)
+    - [Authentication](#authentication)
+    - [Projects Management](#projects-management)
+    - [Vendor Management](#vendor-management)
+    - [Document Management](#document-management)
+    - [Analytics](#analytics)
+    - [Matching System](#matching-system)
+    - [Scheduler](#scheduler)
+  - [🤖 Intelligent Matching System](#-intelligent-matching-system)
+  - [📈 Analytics & Cross-Database Queries](#-analytics--cross-database-queries)
+  - [📧 Notification System](#-notification-system)
+  - [⏰ Scheduled Jobs](#-scheduled-jobs)
+  - [📁 Project Structure](#-project-structure)
+  - [🧪 Testing](#-testing)
+  - [🐳 Docker Support](#-docker-support)
+  - [📝 API Documentation](#-api-documentation)
+  - [🔒 Security Features](#-security-features)
+  - [🌐 Environment Variables](#-environment-variables)
+  - [🚀 Deployment](#-deployment)
+  - [🤝 Contributing](#-contributing)
+  - [📄 License](#-license)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Features
 
-## Installation
+### Core Functionality
 
-```bash
-$ yarn install
+- ✅ **JWT Authentication** with role-based access control (Admin/Client)
+- ✅ **Multi-Database Architecture** (MySQL + MongoDB)
+- ✅ **Intelligent Vendor-Project Matching** with scoring algorithms
+- ✅ **Real-time Email Notifications** via SMTP
+- ✅ **Automated Scheduling** for match refresh and SLA monitoring
+- ✅ **Cross-Database Analytics** combining relational and document data
+- ✅ **Document Management** with upload, search, and tagging
+- ✅ **RESTful API** with comprehensive Swagger documentation
+
+### Advanced Features
+
+- 🔄 **Idempotent Operations** for data consistency
+- 📊 **Performance Analytics** with vendor scoring
+- 🔍 **Advanced Search** across documents and projects
+- 📧 **Template-based Notifications** with HTML emails
+- ⚡ **Optimized Database Queries** with proper indexing
+- 🛡️ **Input Validation** and sanitization
+- 📈 **Scalable Architecture** with modular design
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Client Apps   │    │   Admin Panel   │    │  External APIs  │
+└─────────┬───────┘    └─────────┬───────┘    └─────────┬───────┘
+          │                      │                      │
+          └──────────────────────┼──────────────────────┘
+                                 │
+                    ┌─────────────┴─────────────┐
+                    │     NestJS API Server     │
+                    │   (Authentication &       │
+                    │    Business Logic)        │
+                    └─────────────┬─────────────┘
+                                  │
+                    ┌─────────────┴─────────────┐
+                    │                           │
+          ┌─────────┴─────────┐       ┌─────────┴─────────┐
+          │   MySQL Database  │       │  MongoDB Database │
+          │                   │       │                   │
+          │ • Users           │       │ • Documents       │
+          │ • Projects        │       │ • File Metadata   │
+          │ • Vendors         │       │ • Search Indexes  │
+          │ • Matches         │       │                   │
+          │ • Analytics       │       │                   │
+          └───────────────────┘       └───────────────────┘
 ```
 
-## Running the app
+## 🛠️ Tech Stack
+
+### Backend Framework
+
+- **NestJS** - Progressive Node.js framework
+- **TypeScript** - Type-safe JavaScript
+- **Express** - Web application framework
+
+### Databases
+
+- **MySQL** - Relational data (projects, vendors, matches)
+- **MongoDB** - Document storage (research files, metadata)
+- **TypeORM** - MySQL ORM with migrations
+- **Mongoose** - MongoDB object modeling
+
+### Authentication & Security
+
+- **JWT** - JSON Web Tokens for authentication
+- **bcryptjs** - Password hashing
+- **Passport** - Authentication middleware
+- **Class Validator** - Input validation
+
+### Notifications & Scheduling
+
+- **Nodemailer** - Email notifications
+- **NestJS Schedule** - Cron jobs and task scheduling
+- **HTML Templates** - Rich email formatting
+
+### Documentation & Testing
+
+- **Swagger/OpenAPI** - API documentation
+- **Jest** - Testing framework
+- **Supertest** - HTTP assertion library
+
+### DevOps & Deployment
+
+- **Docker** - Containerization
+- **Docker Compose** - Multi-container orchestration
+- **GitHub Actions** - CI/CD pipeline
+
+## 📦 Installation
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- Yarn package manager
+- Docker & Docker Compose (for containerized setup)
+- MySQL (v8.0 or higher)
+- MongoDB (v6.0 or higher)
+
+### Clone Repository
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+git clone https://github.com/your-username/global-expansion-management-api.git
+cd global-expansion-management-api
 ```
 
-## Test
+### Install Dependencies
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+yarn install
 ```
 
-## Support
+## 🔧 Configuration
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Environment Setup
 
-## Stay in touch
+1. Copy the environment template:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+cp .env.example .env
+```
 
-## License
+2. Configure your environment variables in `.env`:
 
-Nest is [MIT licensed](LICENSE).
+```env
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=3307
+DB_USERNAME=root
+DB_PASSWORD=password
+DB_DATABASE=expanders360
+
+# MongoDB Configuration
+MONGODB_URI=mongodb://localhost:27017/expanders360_docs
+
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+JWT_EXPIRES_IN=1d
+
+# Email Configuration (Optional)
+EMAIL_ENABLED=true
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+EMAIL_FROM=noreply@expanders360.com
+ADMIN_EMAIL=admin@expanders360.com
+
+# Scheduling Configuration
+ENABLE_SCHEDULED_JOBS=true
+```
+
+## 🚀 Running the Application
+
+### Option 1: Docker Compose (Recommended)
+
+```bash
+# Start all services (API + MySQL + MongoDB)
+docker-compose up --build
+
+# Run in background
+docker-compose up -d --build
+```
+
+### Option 2: Local Development
+
+```bash
+# Start databases manually (MySQL on 3306, MongoDB on 27017)
+# Then run the application
+yarn run start:dev
+```
+
+### Database Seeding
+
+```bash
+# Seed the database with sample data
+yarn run seed
+
+# Or inside Docker container
+docker-compose exec app yarn run seed
+```
+
+## 🗄️ Database Setup
+
+### MySQL Schema
+
+The application uses the following main entities:
+
+- **Users** - Authentication and user management
+- **Clients** - Company information and contact details
+- **Projects** - Expansion projects with requirements
+- **Vendors** - Service providers with capabilities
+- **Matches** - Project-vendor relationships with scores
+
+### MongoDB Collections
+
+- **Documents** - Research files and project documentation
+- **Metadata** - File information and search indexes
+
+### Sample Data
+
+The seeding process creates:
+
+- 2 Admin users
+- 10+ Client companies
+- 15+ Vendors across different regions
+- 20+ Projects with various statuses
+- Automatic match generation
+
+## 🔐 Authentication & Authorization
+
+### User Roles
+
+- **Admin**: Full system access, vendor management, analytics
+- **Client**: Project management, document upload, match viewing
+
+### Authentication Flow
+
+1. **Registration**: `POST /auth/register` (Client role)
+2. **Login**: `POST /auth/login` (Returns JWT token)
+3. **Protected Routes**: Include `Authorization: Bearer <token>` header
+
+### Sample Credentials
+
+```bash
+# Admin Users
+Email: effinbzz1@gmail.com
+Email: effinbzz3@gmail.com
+Password: admin123456
+
+# Client Users
+Email: ahmedgeuy159@gmail.com
+Password: client123456
+```
+
+## 📊 API Endpoints
+
+### Authentication
+
+| Method | Endpoint         | Description         | Access        |
+| ------ | ---------------- | ------------------- | ------------- |
+| POST   | `/auth/register` | Register new client | Public        |
+| POST   | `/auth/login`    | User login          | Public        |
+| GET    | `/auth/profile`  | Get user profile    | Authenticated |
+
+### Projects Management
+
+| Method | Endpoint        | Description         | Access       |
+| ------ | --------------- | ------------------- | ------------ |
+| GET    | `/projects`     | Get user's projects | Client       |
+| POST   | `/projects`     | Create new project  | Client       |
+| GET    | `/projects/:id` | Get project details | Client/Admin |
+| PATCH  | `/projects/:id` | Update project      | Client       |
+| DELETE | `/projects/:id` | Delete project      | Client       |
+
+### Vendor Management
+
+| Method | Endpoint       | Description        | Access |
+| ------ | -------------- | ------------------ | ------ |
+| GET    | `/vendors`     | Get all vendors    | Public |
+| POST   | `/vendors`     | Create vendor      | Admin  |
+| GET    | `/vendors/:id` | Get vendor details | Public |
+| PATCH  | `/vendors/:id` | Update vendor      | Admin  |
+| DELETE | `/vendors/:id` | Delete vendor      | Admin  |
+
+### Document Management
+
+| Method | Endpoint                  | Description       | Access       |
+| ------ | ------------------------- | ----------------- | ------------ |
+| POST   | `/documents/upload`       | Upload document   | Client/Admin |
+| GET    | `/documents/search`       | Search documents  | Client/Admin |
+| GET    | `/documents/:id/download` | Download document | Client/Admin |
+
+### Analytics
+
+| Method | Endpoint                 | Description            | Access       |
+| ------ | ------------------------ | ---------------------- | ------------ |
+| GET    | `/analytics/top-vendors` | Top vendors by country | Client/Admin |
+
+### Matching System
+
+| Method | Endpoint                        | Description             | Access       |
+| ------ | ------------------------------- | ----------------------- | ------------ |
+| POST   | `/projects/:id/matches/rebuild` | Rebuild project matches | Client/Admin |
+
+### Scheduler
+
+| Method | Endpoint                           | Description          | Access |
+| ------ | ---------------------------------- | -------------------- | ------ |
+| POST   | `/scheduler/trigger-daily-refresh` | Manual match refresh | Admin  |
+| POST   | `/scheduler/trigger-sla-check`     | Manual SLA check     | Admin  |
+
+## 🤖 Intelligent Matching System
+
+### Matching Algorithm
+
+The system uses a sophisticated scoring algorithm to match vendors with projects:
+
+```typescript
+Score = (Service Overlap × 2) + Vendor Rating + SLA Weight
+```
+
+### Matching Criteria
+
+1. **Geographic Coverage**: Vendor must support the project's target country
+2. **Service Alignment**: At least one service overlap required
+3. **Performance Scoring**: Based on rating and SLA commitments
+
+### Scoring Components
+
+- **Service Overlap**: +2 points per matching service
+- **Vendor Rating**: 0-5 points based on historical performance
+- **SLA Weight**: Bonus points for faster response commitments
+
+### Example Match Process
+
+```bash
+Project: Germany expansion, needs ["IT Consulting", "Software Development"]
+Vendor: EuroTech Solutions, offers ["IT Consulting", "Software Development", "Cloud Migration"]
+
+Calculation:
+- Service Overlap: 2 matches × 2 = 4 points
+- Vendor Rating: 4.8 points
+- SLA Weight: (48-8)/48 × 10 = 8.33 points
+- Total Score: 17.13 points
+```
+
+## 📈 Analytics & Cross-Database Queries
+
+### Top Vendors Analytics
+
+The `/analytics/top-vendors` endpoint provides:
+
+- **Top 3 vendors per country** (based on 30-day average match scores)
+- **Document count** for expansion projects in each country
+- **Cross-database aggregation** combining MySQL matches with MongoDB documents
+
+### Implementation
+
+```typescript
+// MySQL Query: Get top vendors by match scores
+const topVendors = await this.matchRepository
+  .createQueryBuilder('match')
+  .innerJoin('match.project', 'project')
+  .innerJoin('match.vendor', 'vendor')
+  .where('project.country = :country', { country })
+  .andWhere('match.created_at >= :thirtyDaysAgo', { thirtyDaysAgo })
+  .groupBy('vendor.id')
+  .orderBy('AVG(match.score)', 'DESC')
+  .limit(3);
+
+// MongoDB Query: Count related documents
+const documentCount = await this.documentModel.countDocuments({
+  projectId: { $in: projectIds },
+});
+```
+
+## 📧 Notification System
+
+### Email Templates
+
+- **Match Created**: Notifies clients of new vendor matches
+- **SLA Violation**: Alerts admins of vendor performance issues
+- **Daily Summary**: Reports match refresh results to admins
+
+### SMTP Configuration
+
+```env
+EMAIL_ENABLED=true
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+```
+
+### Notification Triggers
+
+1. **New Match Created**: Automatic email to project owner
+2. **SLA Violations**: Immediate admin notifications
+3. **Daily Summaries**: Scheduled reports on system activity
+
+## ⏰ Scheduled Jobs
+
+### Daily Match Refresh
+
+- **Schedule**: Every day at 2:00 AM
+- **Function**: Rebuilds matches for all active projects
+- **Notification**: Sends summary email to admins
+
+### SLA Compliance Check
+
+- **Schedule**: Every 6 hours
+- **Function**: Monitors vendor response times and commitments
+- **Alerts**: Flags vendors with performance issues
+
+### Manual Triggers
+
+Both scheduled jobs can be triggered manually via API endpoints for testing and maintenance.
+
+## 📁 Project Structure
+
+```
+src/
+├── admins/              # Admin user management
+├── analytics/           # Cross-database analytics
+├── auth/               # Authentication & authorization
+│   ├── decorators/     # Custom decorators
+│   ├── dto/           # Data transfer objects
+│   ├── guards/        # Route guards
+│   └── strategies/    # Passport strategies
+├── clients/           # Client management
+├── config/            # Configuration files
+├── database/          # Database configuration & seeds
+│   └── seeds/         # Sample data generation
+├── documents/         # MongoDB document management
+│   ├── dto/          # Document DTOs
+│   └── schemas/      # Mongoose schemas
+├── matches/           # Vendor-project matching
+├── notifications/     # Email notification system
+│   └── templates/    # HTML email templates
+├── projects/          # Project management
+├── scheduler/         # Cron jobs & scheduled tasks
+├── users/            # User entity & management
+├── vendors/          # Vendor management
+├── app.module.ts     # Main application module
+└── main.ts          # Application entry point
+```
+
+## 🧪 Testing
+
+### Running Tests
+
+```bash
+# Unit tests
+yarn test
+
+# End-to-end tests
+yarn test:e2e
+
+# Test coverage
+yarn test:cov
+
+# Watch mode
+yarn test:watch
+```
+
+### Test Coverage
+
+The application includes comprehensive tests for:
+
+- Authentication flows
+- Business logic validation
+- Database operations
+- API endpoint responses
+- Error handling scenarios
+
+## 🐳 Docker Support
+
+### Services
+
+- **app**: NestJS application server
+- **mysql**: MySQL 8.0 database
+- **mongodb**: MongoDB 6.0 database
+
+### Docker Commands
+
+```bash
+# Build and start all services
+docker-compose up --build
+
+# Start in background
+docker-compose up -d
+
+# View logs
+docker-compose logs -f app
+
+# Stop all services
+docker-compose down
+
+# Reset databases
+docker-compose down -v
+```
+
+### Health Checks
+
+All services include health checks to ensure proper startup order and system reliability.
+
+## 📝 API Documentation
+
+### Swagger UI
+
+Access interactive API documentation at:
+
+- **Local**: http://localhost:3000/api
+- **Production**: https://your-domain.com/api
+
+### Features
+
+- Complete endpoint documentation
+- Request/response schemas
+- Authentication examples
+- Try-it-out functionality
+- Model definitions
+
+## 🔒 Security Features
+
+### Authentication Security
+
+- JWT tokens with configurable expiration
+- Password hashing with bcrypt
+- Role-based access control
+- Protected route guards
+
+### Input Validation
+
+- Request payload validation
+- SQL injection prevention
+- XSS protection
+- Rate limiting ready
+
+### Database Security
+
+- Parameterized queries
+- Connection encryption
+- Environment-based configuration
+- Proper indexing for performance
+
+## 🌐 Environment Variables
+
+### Required Variables
+
+```env
+# Database
+DB_HOST=localhost
+DB_PORT=3307
+DB_USERNAME=root
+DB_PASSWORD=password
+DB_DATABASE=expanders360
+MONGODB_URI=mongodb://localhost:27017/expanders360_docs
+
+# Authentication
+JWT_SECRET=your-secret-key
+JWT_EXPIRES_IN=1d
+
+# Application
+NODE_ENV=development
+PORT=3000
+```
+
+### Optional Variables
+
+```env
+# Email Notifications
+EMAIL_ENABLED=false
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+EMAIL_FROM=noreply@expanders360.com
+ADMIN_EMAIL=admin@expanders360.com
+
+# Scheduling
+ENABLE_SCHEDULED_JOBS=true
+```
+
+## 🚀 Deployment
+
+### Production Checklist
+
+- [ ] Set strong JWT secret
+- [ ] Configure production database URLs
+- [ ] Set up SMTP credentials
+- [ ] Enable SSL/TLS
+- [ ] Configure environment variables
+- [ ] Set up monitoring and logging
+- [ ] Configure backup strategies
+
+### Deployment Platforms
+
+The application is ready for deployment on:
+
+- **Railway** - Easy Docker deployment
+- **Render** - Free tier available
+- **AWS** - Elastic Beanstalk or ECS
+- **Google Cloud** - Cloud Run
+- **DigitalOcean** - App Platform
+- **Heroku** - Container deployment
+
+## 🤝 Contributing
+
+### Development Setup
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass
+6. Submit a pull request
+
+### Code Standards
+
+- TypeScript strict mode
+- ESLint configuration
+- Prettier formatting
+- Conventional commits
+- Comprehensive testing
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🎯 Quick Start Summary
+
+1. **Clone & Install**: `git clone <repo> && cd <project> && yarn install`
+2. **Environment**: `cp .env.example .env` (configure as needed)
+3. **Start Services**: `docker-compose up --build`
+4. **Seed Database**: `yarn run seed`
+5. **Access API**: http://localhost:3000/api
+
+### Test Credentials
+
+- **Admin**: `effinbzz1@gmail.com` / `admin123456`
+- **Client**: `ahmedgeuy159@gmail.com` / `client123456`
+
+**🚀 Your Global Expansion Management API is ready to scale your business worldwide!**
