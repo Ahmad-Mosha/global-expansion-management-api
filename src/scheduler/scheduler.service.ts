@@ -146,7 +146,7 @@ export class SchedulerService {
       // Send notifications for SLA violations
       for (const violation of slaViolations) {
         await this.notificationsService.sendSlaViolationNotification({
-          adminEmails: ['admin@expanders360.com'], // In real app, get from database
+          adminEmails: ['effinbzz1@gmail.com', 'effinbzz3@gmail.com'],
           vendorName: violation.vendor.name,
           vendorId: violation.vendor.id,
           slaHours: violation.vendor.response_sla_hours,

@@ -132,10 +132,11 @@ export class NotificationsService {
   }
 
   private async getAdminEmails(): Promise<string[]> {
-    // For now, return a default admin email
-    // In a real implementation, you'd query the admin users from the database
+    // Return the real admin emails for notifications
     return [
-      this.configService.get<string>('ADMIN_EMAIL', 'admin@expanders360.com'),
+      'effinbzz1@gmail.com',
+      'effinbzz3@gmail.com',
+      'ahmedgeuy159@gmail.com',
     ];
   }
 }

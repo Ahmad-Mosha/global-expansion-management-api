@@ -16,15 +16,11 @@ export async function seedAdmin(dataSource: DataSource) {
 
   const adminsData = [
     {
-      email: 'admin@expanders360.com',
+      email: 'effinbzz1@gmail.com',
       password: 'admin123456',
     },
     {
-      email: 'superadmin@expanders360.com',
-      password: 'admin123456',
-    },
-    {
-      email: 'system.admin@expanders360.com',
+      email: 'effinbzz3@gmail.com',
       password: 'admin123456',
     },
   ];
