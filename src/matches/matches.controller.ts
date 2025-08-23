@@ -9,7 +9,8 @@ import { MatchesService } from './matches.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { UserRole } from '../users/entity/user.entity';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { UserRole, User } from '../users/entity/user.entity';
 
 @ApiTags('matches')
 @Controller('projects')
@@ -28,7 +29,10 @@ export class MatchesController {
   @ApiResponse({ status: 404, description: 'Project not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
-  async rebuildMatches(@Param('id') projectId: string) {
-    return this.matchesService.rebuildMatches(projectId);
+  async rebuildMatches(
+    @Param('id') projectId: string,
+    @CurrentUser() user: User,
+  ) {
+    return this.matchesService.rebuildMatches(projectId, user.id, user.role);
   }
 }

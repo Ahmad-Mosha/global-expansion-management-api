@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Match } from './entity/match.entity';
 import { Project } from '../projects/entity/project.entity';
 import { Vendor } from '../vendors/entity/vendor.entity';
+import { UserRole } from '../users/entity/user.entity';
 
 @Injectable()
 export class MatchesService {
@@ -16,7 +21,11 @@ export class MatchesService {
     private vendorRepository: Repository<Vendor>,
   ) {}
 
-  async rebuildMatches(projectId: string) {
+  async rebuildMatches(
+    projectId: string,
+    userId?: string,
+    userRole?: UserRole,
+  ) {
     // Get project details
     const project = await this.projectRepository.findOne({
       where: { id: projectId },
@@ -24,6 +33,13 @@ export class MatchesService {
 
     if (!project) {
       throw new NotFoundException(`Project with ID ${projectId} not found`);
+    }
+
+    // Check authorization - clients can only rebuild matches for their own projects
+    if (userRole === UserRole.CLIENT && project.client_id !== userId) {
+      throw new ForbiddenException(
+        'You can only rebuild matches for your own projects',
+      );
     }
 
     // Find eligible vendors using MySQL queries
