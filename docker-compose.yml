@@ -18,8 +18,10 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/expanders360_docs
       - JWT_SECRET=fallback-secret-key
     depends_on:
-      - mysql
-      - mongodb
+      mysql:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
 
   mysql:
     image: mysql:8.0
@@ -30,6 +32,10 @@ services:
       MYSQL_DATABASE: expanders360
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      timeout: 20s
+      retries: 10
 
   mongodb:
     image: mongo:6.0
@@ -37,6 +43,10 @@ services:
       - '27017:27017'
     volumes:
       - mongodb_data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      timeout: 20s
+      retries: 10
 
 volumes:
   mysql_data:
