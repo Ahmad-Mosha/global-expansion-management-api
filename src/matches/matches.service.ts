@@ -46,14 +46,23 @@ export class MatchesService {
     const eligibleVendors = await this.findEligibleVendors(project);
 
     // Calculate scores and prepare matches
-    const matchData = eligibleVendors.map((vendor) => {
-      const score = this.calculateScore(project, vendor);
-      return {
-        project_id: projectId,
-        vendor_id: vendor.id,
-        score,
-      };
-    });
+    const matchData = eligibleVendors
+      .map((vendor) => {
+        const score = this.calculateScore(project, vendor);
+        return {
+          project_id: projectId,
+          vendor_id: vendor.id,
+          score,
+        };
+      })
+      .filter(
+        (match) =>
+          // Filter out any invalid matches
+          match.project_id &&
+          match.vendor_id &&
+          !isNaN(match.score) &&
+          isFinite(match.score),
+      );
 
     // Idempotent upsert - delete existing matches first, then insert new ones
     await this.matchRepository.delete({ project_id: projectId });
@@ -92,13 +101,19 @@ export class MatchesService {
       vendor.services_offered.includes(service),
     ).length;
 
+    // Ensure vendor properties are valid numbers
+    const rating = Number(vendor.rating) || 0;
+    const slaHours = Number(vendor.response_sla_hours) || 24;
+
     // Calculate SLA weight (better SLA = higher weight)
-    const slaWeight = Math.max(0, ((48 - vendor.response_sla_hours) / 48) * 10);
+    const slaWeight = Math.max(0, ((48 - slaHours) / 48) * 10);
 
     // Score formula: services_overlap * 2 + rating + SLA_weight
-    const score = servicesOverlap * 2 + vendor.rating + slaWeight;
+    const score = servicesOverlap * 2 + rating + slaWeight;
 
-    // Round to 2 decimal places
-    return Math.round(score * 100) / 100;
+    // Ensure score is a valid number and round to 2 decimal places
+    const finalScore = isNaN(score) ? 0 : Math.round(score * 100) / 100;
+
+    return finalScore;
   }
 }

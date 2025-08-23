@@ -34,8 +34,9 @@ services:
       - mysql_data:/var/lib/mysql
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
-      timeout: 20s
-      retries: 10
+      timeout: 5s
+      retries: 5
+      interval: 2s
 
   mongodb:
     image: mongo:6.0
@@ -45,8 +46,9 @@ services:
       - mongodb_data:/data/db
     healthcheck:
       test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
-      timeout: 20s
-      retries: 10
+      timeout: 5s
+      retries: 5
+      interval: 2s
 
 volumes:
   mysql_data:

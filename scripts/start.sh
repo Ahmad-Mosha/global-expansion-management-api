@@ -1,28 +1,35 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "🚀 Starting application with automatic seeding..."
 
-# Wait for MySQL to be ready
-echo "⏳ Waiting for MySQL to be ready..."
-while ! nc -z mysql 3306; do
-  sleep 1
-done
-echo "✅ MySQL is ready!"
+# Function to wait for service
+wait_for_service() {
+  local host=$1
+  local port=$2
+  local service=$3
+  
+  echo "⏳ Waiting for $service..."
+  for i in $(seq 1 30); do
+    if nc -z $host $port; then
+      echo "✅ $service ready!"
+      return 0
+    fi
+    sleep 1
+  done
+  echo "❌ $service failed to start"
+  exit 1
+}
 
-# Wait for MongoDB to be ready
-echo "⏳ Waiting for MongoDB to be ready..."
-while ! nc -z mongodb 27017; do
-  sleep 1
-done
-echo "✅ MongoDB is ready!"
+# Wait for databases
+wait_for_service mysql 3306 "MySQL"
+wait_for_service mongodb 27017 "MongoDB"
 
-# Give databases a bit more time to fully initialize
-sleep 5
+# Quick database stabilization
+sleep 2
 
-# Run database seeds
-echo "🌱 Running database seeds..."
+# Run seeds quickly
+echo "🌱 Seeding database..."
 npm run seed
 
-# Start the application
-echo "🎯 Starting NestJS application..."
-npm run start:dev
+echo "🎯 Starting application..."
+exec npm run start:dev

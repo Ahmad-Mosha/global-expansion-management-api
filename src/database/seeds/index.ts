@@ -26,25 +26,27 @@ async function runSeeds() {
     await dataSource.initialize();
     console.log('Database connected for seeding');
 
-    console.log('\n=== Seeding Database ===');
+    // Quick check if data already exists
+    const userRepository = dataSource.getRepository(User);
+    const existingUsers = await userRepository.count();
+
+    if (existingUsers > 0) {
+      console.log('Database already seeded, skipping...');
+      return;
+    }
+
+    console.log('=== Seeding Database ===');
 
     await seedAdmin(dataSource);
     await seedVendors(dataSource);
     await seedClients(dataSource);
     await seedProjects(dataSource);
 
-    console.log('\n=== All seeds completed successfully ===');
-    console.log('\nLogin Credentials:');
-    console.log(
-      'Admins: admin@expanders360.com, superadmin@expanders360.com, system.admin@expanders360.com',
-    );
-    console.log('Admin Password: admin123456');
-    console.log(
-      '\nClients: john.smith@techcorp.com, maria.garcia@globalretail.com, etc.',
-    );
-    console.log('Client Password: client123456');
+    console.log('=== Seeding completed ===');
+    console.log('Login: admin@expanders360.com / admin123456');
+    console.log('Client: john.smith@techcorp.com / client123456');
   } catch (error) {
-    console.error('Error running seeds:', error);
+    console.error('Seeding error:', error);
   } finally {
     await dataSource.destroy();
   }
