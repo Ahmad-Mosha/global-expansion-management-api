@@ -9,6 +9,7 @@ import { Match } from './entity/match.entity';
 import { Project } from '../projects/entity/project.entity';
 import { Vendor } from '../vendors/entity/vendor.entity';
 import { UserRole } from '../users/entity/user.entity';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class MatchesService {
@@ -19,6 +20,7 @@ export class MatchesService {
     private projectRepository: Repository<Project>,
     @InjectRepository(Vendor)
     private vendorRepository: Repository<Vendor>,
+    private notificationsService: NotificationsService,
   ) {}
 
   async rebuildMatches(
@@ -64,17 +66,29 @@ export class MatchesService {
           isFinite(match.score),
       );
 
+    // Get existing matches to compare
+    const existingMatches = await this.matchRepository.find({
+      where: { project_id: projectId },
+    });
+
     // Idempotent upsert - delete existing matches first, then insert new ones
     await this.matchRepository.delete({ project_id: projectId });
 
+    let newMatches: Match[] = [];
     if (matchData.length > 0) {
-      await this.matchRepository.save(matchData);
+      newMatches = await this.matchRepository.save(matchData);
+    }
+
+    // Send notifications for new matches (only if this is not a scheduled job)
+    if (userRole !== UserRole.ADMIN || userId) {
+      await this.sendMatchNotifications(project, newMatches, existingMatches);
     }
 
     return {
       message: 'Matches rebuilt successfully',
       projectId,
       matchesFound: matchData.length,
+      matchesCreated: newMatches.length,
       matches: matchData.map((match) => ({
         vendorId: match.vendor_id,
         score: match.score,
@@ -115,5 +129,57 @@ export class MatchesService {
     const finalScore = isNaN(score) ? 0 : Math.round(score * 100) / 100;
 
     return finalScore;
+  }
+
+  private async sendMatchNotifications(
+    project: Project,
+    newMatches: Match[],
+    existingMatches: Match[],
+  ): Promise<void> {
+    try {
+      // Only send notifications for truly new matches
+      const existingVendorIds = existingMatches.map((m) => m.vendor_id);
+      const actuallyNewMatches = newMatches.filter(
+        (match) => !existingVendorIds.includes(match.vendor_id),
+      );
+
+      if (actuallyNewMatches.length === 0) {
+        return; // No new matches to notify about
+      }
+
+      // Get project with client details
+      const projectWithClient = await this.projectRepository.findOne({
+        where: { id: project.id },
+        relations: ['client', 'client.user'],
+      });
+
+      if (!projectWithClient?.client?.user) {
+        return; // Can't send notification without client email
+      }
+
+      // Send notification for each new match
+      for (const match of actuallyNewMatches) {
+        const vendor = await this.vendorRepository.findOne({
+          where: { id: match.vendor_id },
+        });
+
+        if (vendor) {
+          await this.notificationsService.sendMatchCreatedNotification({
+            clientEmail: projectWithClient.client.user.email,
+            clientName:
+              projectWithClient.client.company_name || 'Valued Client',
+            projectTitle: `${project.country} Expansion Project`,
+            projectCountry: project.country,
+            vendorName: vendor.name,
+            matchScore: Number(match.score),
+            projectId: project.id,
+            matchId: match.id,
+          });
+        }
+      }
+    } catch (error) {
+      // Don't fail the match creation if notification fails
+      console.error('Failed to send match notifications:', error);
+    }
   }
 }

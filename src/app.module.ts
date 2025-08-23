@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { databaseConfig } from './config/database.config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
@@ -12,12 +13,15 @@ import { VendorsModule } from './vendors/vendors.module';
 import { MatchesModule } from './matches/matches.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { DocumentsModule } from './documents/documents.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { SchedulerModule } from './scheduler/scheduler.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot(databaseConfig),
     MongooseModule.forRoot(
       process.env.MONGODB_URI || 'mongodb://localhost:27017/expanders360_docs',
@@ -31,6 +35,8 @@ import { DocumentsModule } from './documents/documents.module';
     MatchesModule,
     AnalyticsModule,
     DocumentsModule,
+    NotificationsModule,
+    SchedulerModule,
   ],
   controllers: [],
   providers: [],

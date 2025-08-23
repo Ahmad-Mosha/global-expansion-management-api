@@ -16,16 +16,16 @@ export async function seedClients(dataSource: DataSource) {
 
   const clientsData = [
     {
-      email: 'john.smith@techcorp.com',
+      email: 'ahmedgeuy159@gmail.com',
       password: 'client123456',
       company_name: 'TechCorp Industries',
-      contact_email: 'expansion@techcorp.com',
+      contact_email: 'ahmedgeuy159@gmail.com',
     },
     {
-      email: 'maria.garcia@globalretail.com',
+      email: 'amirahussein632@gmail.com',
       password: 'client123456',
       company_name: 'Global Retail Solutions',
-      contact_email: 'international@globalretail.com',
+      contact_email: 'amirahussein632@gmail.com',
     },
     {
       email: 'david.chen@innovatesoft.com',
