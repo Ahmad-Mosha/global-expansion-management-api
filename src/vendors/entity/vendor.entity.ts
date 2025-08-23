@@ -1,4 +1,4 @@
-import { Match } from 'src/matches/entity/match.entity';
+import { Match } from '../../matches/entity/match.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,

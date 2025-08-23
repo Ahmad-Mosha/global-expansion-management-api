@@ -16,4 +16,4 @@ RUN chmod +x scripts/start.sh
 
 EXPOSE 3000
 
-CMD ["./scripts/start.sh"]
+CMD ["/bin/sh", "./scripts/start.sh"]
