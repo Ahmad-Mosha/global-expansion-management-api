@@ -23,7 +23,7 @@ A comprehensive NestJS-based API for managing global business expansion projects
   - [📝 API Documentation](#-api-documentation)
   - [🌐 Environment Variables](#-environment-variables)
 
-## � Feaatures
+## � Features
 
 ### Core Functionality
 
