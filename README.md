@@ -514,7 +514,7 @@ ENABLE_SCHEDULED_JOBS=true
 
 **Note**: These are seeded accounts with placeholder emails. For testing email notifications, update the database with your real email addresses or create new accounts with real emails to receive actual notification emails.
 
-- **Admin**: `effinbzz1@gmail.com` / `admin123456`
-- **Client**: `ahmedgeuy159@gmail.com` / `client123456`
+- **Admin**: `test@gmail.com` / `admin123456`
+- **Client**: `test@gmail.com` / `client123456`
 
 **🚀 Your Global Expansion Management API is ready to scale your business worldwide!**
