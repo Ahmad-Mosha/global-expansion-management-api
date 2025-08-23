@@ -9,34 +9,21 @@ A comprehensive NestJS-based API for managing global business expansion projects
   - [🚀 Features](#-features)
   - [🏗️ Architecture](#️-architecture)
   - [🛠️ Tech Stack](#️-tech-stack)
-  - [📦 Installation](#-installation)
+  - [📦 Installation & Setup](#-installation--setup)
   - [🔧 Configuration](#-configuration)
   - [🚀 Running the Application](#-running-the-application)
   - [🗄️ Database Setup](#️-database-setup)
   - [🔐 Authentication & Authorization](#-authentication--authorization)
   - [📊 API Endpoints](#-api-endpoints)
-    - [Authentication](#authentication)
-    - [Projects Management](#projects-management)
-    - [Vendor Management](#vendor-management)
-    - [Document Management](#document-management)
-    - [Analytics](#analytics)
-    - [Matching System](#matching-system)
-    - [Scheduler](#scheduler)
   - [🤖 Intelligent Matching System](#-intelligent-matching-system)
   - [📈 Analytics & Cross-Database Queries](#-analytics--cross-database-queries)
   - [📧 Notification System](#-notification-system)
   - [⏰ Scheduled Jobs](#-scheduled-jobs)
   - [📁 Project Structure](#-project-structure)
-  - [🧪 Testing](#-testing)
-  - [🐳 Docker Support](#-docker-support)
   - [📝 API Documentation](#-api-documentation)
-  - [🔒 Security Features](#-security-features)
   - [🌐 Environment Variables](#-environment-variables)
-  - [🚀 Deployment](#-deployment)
-  - [🤝 Contributing](#-contributing)
-  - [📄 License](#-license)
 
-## 🚀 Features
+## � FeAatures
 
 ### Core Functionality
 
@@ -62,10 +49,10 @@ A comprehensive NestJS-based API for managing global business expansion projects
 ## 🏗️ Architecture
 
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Client Apps   │    │   Admin Panel   │    │  External APIs  │
-└─────────┬───────┘    └─────────┬───────┘    └─────────┬───────┘
-          │                      │                      │
+┌─────────────────┐    ┌─────────────────┐
+│   Client Apps   │    │   Admin Panel   │
+└─────────┬───────┘    └─────────┬───────┘
+          │                      │
           └──────────────────────┼──────────────────────┘
                                  │
                     ┌─────────────┴─────────────┐
@@ -93,7 +80,6 @@ A comprehensive NestJS-based API for managing global business expansion projects
 
 - **NestJS** - Progressive Node.js framework
 - **TypeScript** - Type-safe JavaScript
-- **Express** - Web application framework
 
 ### Databases
 
@@ -115,39 +101,26 @@ A comprehensive NestJS-based API for managing global business expansion projects
 - **NestJS Schedule** - Cron jobs and task scheduling
 - **HTML Templates** - Rich email formatting
 
-### Documentation & Testing
+### Documentation
 
 - **Swagger/OpenAPI** - API documentation
-- **Jest** - Testing framework
-- **Supertest** - HTTP assertion library
 
-### DevOps & Deployment
+### DevOps
 
 - **Docker** - Containerization
 - **Docker Compose** - Multi-container orchestration
-- **GitHub Actions** - CI/CD pipeline
 
-## 📦 Installation
+## 📦 Installation & Setup
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- Yarn package manager
-- Docker & Docker Compose (for containerized setup)
-- MySQL (v8.0 or higher)
-- MongoDB (v6.0 or higher)
+- Docker & Docker Compose
 
 ### Clone Repository
 
 ```bash
 git clone https://github.com/your-username/global-expansion-management-api.git
 cd global-expansion-management-api
-```
-
-### Install Dependencies
-
-```bash
-yarn install
 ```
 
 ## 🔧 Configuration
@@ -192,32 +165,31 @@ ENABLE_SCHEDULED_JOBS=true
 
 ## 🚀 Running the Application
 
-### Option 1: Docker Compose (Recommended)
+### Docker Compose Setup
 
 ```bash
 # Start all services (API + MySQL + MongoDB)
+# The start.sh script automatically runs database seeding
 docker-compose up --build
 
 # Run in background
 docker-compose up -d --build
 ```
 
-### Option 2: Local Development
+**Note**: The Docker container automatically runs the seeding script via `scripts/start.sh`, so your database will be populated with sample data on startup.
 
-```bash
-# Start databases manually (MySQL on 3306, MongoDB on 27017)
-# Then run the application
-yarn run start:dev
-```
+### Email Testing
 
-### Database Seeding
+To test email notifications, add your real email credentials to the `.env` file:
 
-```bash
-# Seed the database with sample data
-yarn run seed
-
-# Or inside Docker container
-docker-compose exec app yarn run seed
+```env
+EMAIL_ENABLED=true
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-real-email@gmail.com
+SMTP_PASS=your-app-password
+EMAIL_FROM=noreply@expanders360.com
+ADMIN_EMAIL=your-admin-email@gmail.com
 ```
 
 ## 🗄️ Database Setup
@@ -466,65 +438,6 @@ src/
 └── main.ts          # Application entry point
 ```
 
-## 🧪 Testing
-
-### Running Tests
-
-```bash
-# Unit tests
-yarn test
-
-# End-to-end tests
-yarn test:e2e
-
-# Test coverage
-yarn test:cov
-
-# Watch mode
-yarn test:watch
-```
-
-### Test Coverage
-
-The application includes comprehensive tests for:
-
-- Authentication flows
-- Business logic validation
-- Database operations
-- API endpoint responses
-- Error handling scenarios
-
-## 🐳 Docker Support
-
-### Services
-
-- **app**: NestJS application server
-- **mysql**: MySQL 8.0 database
-- **mongodb**: MongoDB 6.0 database
-
-### Docker Commands
-
-```bash
-# Build and start all services
-docker-compose up --build
-
-# Start in background
-docker-compose up -d
-
-# View logs
-docker-compose logs -f app
-
-# Stop all services
-docker-compose down
-
-# Reset databases
-docker-compose down -v
-```
-
-### Health Checks
-
-All services include health checks to ensure proper startup order and system reliability.
-
 ## 📝 API Documentation
 
 ### Swagger UI
@@ -542,28 +455,13 @@ Access interactive API documentation at:
 - Try-it-out functionality
 - Model definitions
 
-## 🔒 Security Features
+### API Screenshots
 
-### Authentication Security
+![API Documentation Overview](images/1.png)
 
-- JWT tokens with configurable expiration
-- Password hashing with bcrypt
-- Role-based access control
-- Protected route guards
+![Authentication Endpoints](images/2.png)
 
-### Input Validation
-
-- Request payload validation
-- SQL injection prevention
-- XSS protection
-- Rate limiting ready
-
-### Database Security
-
-- Parameterized queries
-- Connection encryption
-- Environment-based configuration
-- Proper indexing for performance
+![Project Management Endpoints](images/3.png)
 
 ## 🌐 Environment Variables
 
@@ -603,61 +501,14 @@ ADMIN_EMAIL=admin@expanders360.com
 ENABLE_SCHEDULED_JOBS=true
 ```
 
-## 🚀 Deployment
-
-### Production Checklist
-
-- [ ] Set strong JWT secret
-- [ ] Configure production database URLs
-- [ ] Set up SMTP credentials
-- [ ] Enable SSL/TLS
-- [ ] Configure environment variables
-- [ ] Set up monitoring and logging
-- [ ] Configure backup strategies
-
-### Deployment Platforms
-
-The application is ready for deployment on:
-
-- **Railway** - Easy Docker deployment
-- **Render** - Free tier available
-- **AWS** - Elastic Beanstalk or ECS
-- **Google Cloud** - Cloud Run
-- **DigitalOcean** - App Platform
-- **Heroku** - Container deployment
-
-## 🤝 Contributing
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass
-6. Submit a pull request
-
-### Code Standards
-
-- TypeScript strict mode
-- ESLint configuration
-- Prettier formatting
-- Conventional commits
-- Comprehensive testing
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ---
 
 ## 🎯 Quick Start Summary
 
-1. **Clone & Install**: `git clone <repo> && cd <project> && yarn install`
-2. **Environment**: `cp .env.example .env` (configure as needed)
+1. **Clone & Setup**: `git clone <repo> && cd <project>`
+2. **Environment**: `cp .env.example .env` (add your real email credentials for testing)
 3. **Start Services**: `docker-compose up --build`
-4. **Seed Database**: `yarn run seed`
-5. **Access API**: http://localhost:3000/api
+4. **Access API**: http://localhost:3000/api
 
 ### Test Credentials
 
