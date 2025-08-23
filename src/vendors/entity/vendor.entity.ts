@@ -22,7 +22,7 @@ export class Vendor {
   @Column('json')
   services_offered: string[];
 
-  @Column('decimal', { precision: 2, scale: 1, default: 0 })
+  @Column('decimal', { precision: 3, scale: 1, default: 0 })
   rating: number;
 
   @Column({ default: 24 })
