@@ -32,7 +32,7 @@ export class SchedulerService {
     );
   }
 
-  @Cron('0 2 * * *') // Daily at 2 AM
+  @Cron('0 2 * * *', { name: 'dailyMatchRefresh' }) // Daily at 2 AM
   async refreshMatchesDaily() {
     if (!this.scheduledJobsEnabled) {
       this.logger.log(
@@ -92,7 +92,7 @@ export class SchedulerService {
     }
   }
 
-  @Cron('0 */6 * * *') // Every 6 hours
+  @Cron('0 */6 * * *', { name: 'slaCheck' }) // Every 6 hours
   async checkVendorSlas() {
     if (!this.scheduledJobsEnabled) {
       this.logger.log('Scheduled jobs are disabled, skipping SLA check');
