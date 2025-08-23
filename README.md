@@ -512,6 +512,8 @@ ENABLE_SCHEDULED_JOBS=true
 
 ### Test Credentials
 
+**Note**: These are seeded accounts with placeholder emails. For testing email notifications, update the database with your real email addresses or create new accounts with real emails to receive actual notification emails.
+
 - **Admin**: `effinbzz1@gmail.com` / `admin123456`
 - **Client**: `ahmedgeuy159@gmail.com` / `client123456`
 
