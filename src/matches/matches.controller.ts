@@ -5,6 +5,7 @@ import {
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
+import { RebuildMatchesResponseDto } from './dto/match-response.dto';
 import { MatchesService } from './matches.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -25,6 +26,7 @@ export class MatchesController {
   @ApiResponse({
     status: 200,
     description: 'Matches rebuilt successfully',
+    type: RebuildMatchesResponseDto,
   })
   @ApiResponse({ status: 404, description: 'Project not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
