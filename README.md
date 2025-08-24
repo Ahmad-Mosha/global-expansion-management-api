@@ -21,6 +21,7 @@ A comprehensive NestJS-based API for managing global business expansion projects
   - [⏰ Scheduled Jobs](#-scheduled-jobs)
   - [📁 Project Structure](#-project-structure)
   - [📝 API Documentation](#-api-documentation)
+  - [🚀 Deployment](#-deployment)
   - [🌐 Environment Variables](#-environment-variables)
 
 ## � Features
@@ -445,7 +446,7 @@ src/
 Access interactive API documentation at:
 
 - **Local**: http://localhost:3000/api
-- **Production**: https://your-domain.com/api
+- **Production**: https://16.170.223.83:3000/api
 
 ### Features
 
@@ -462,6 +463,138 @@ Access interactive API documentation at:
 ![Authentication Endpoints](images/2.png)
 
 ![Project Management Endpoints](images/3.png)
+
+## 🚀 Deployment
+
+### AWS EC2 Deployment
+
+The application is successfully deployed on AWS EC2 and accessible at: **https://16.170.223.83:3000/api**
+
+#### Deployment Steps
+
+1. **Create EC2 Instance**
+
+   ```bash
+   # Launch an EC2 instance (Ubuntu/Amazon Linux)
+   # Configure security groups to allow ports 22 (SSH), 3000 (API), 3306 (MySQL), 27017 (MongoDB)
+   ```
+
+2. **Connect to EC2 Instance**
+
+   ```bash
+   # Connect via SSH using your key pair
+   ssh -i your-key.pem ubuntu@16.170.223.83
+   ```
+
+3. **Install Docker & Dependencies**
+
+   ```bash
+   # Update system packages
+   sudo apt update && sudo apt upgrade -y
+
+   # Install Docker
+   sudo apt install docker.io -y
+   sudo systemctl start docker
+   sudo systemctl enable docker
+
+   # Install Docker Compose
+   sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   sudo chmod +x /usr/local/bin/docker-compose
+
+   # Add user to docker group
+   sudo usermod -aG docker $USER
+   ```
+
+4. **Clone Repository**
+
+   ```bash
+   # Install Git if not available
+   sudo apt install git -y
+
+   # Clone the repository
+   git clone https://github.com/your-username/global-expansion-management-api.git
+   cd global-expansion-management-api
+   ```
+
+5. **Configure Environment**
+
+   ```bash
+   # Copy and configure environment variables
+   cp .env.example .env
+   nano .env  # Edit with production values
+   ```
+
+6. **Deploy Application**
+
+   ```bash
+   # Build and start containers
+   sudo docker-compose up -d --build
+
+   # Check container status
+   sudo docker-compose ps
+
+   # View logs
+   sudo docker-compose logs -f app
+   ```
+
+#### Production Environment Variables
+
+```env
+# Database Configuration (Production)
+DB_HOST=mysql
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=your-secure-password
+DB_DATABASE=expanders360
+
+# MongoDB Configuration
+MONGODB_URI=mongodb://mongodb:27017/expanders360_docs
+
+# JWT Configuration
+JWT_SECRET=your-super-secure-jwt-secret-for-production
+JWT_EXPIRES_IN=1d
+
+# Email Configuration
+EMAIL_ENABLED=true
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-production-email@gmail.com
+SMTP_PASS=your-app-password
+EMAIL_FROM=noreply@expanders360.com
+ADMIN_EMAIL=admin@expanders360.com
+
+# Application
+NODE_ENV=production
+PORT=3000
+
+# Scheduling
+ENABLE_SCHEDULED_JOBS=true
+```
+
+#### Security Considerations
+
+- Configure EC2 security groups to restrict access
+- Use strong passwords for database connections
+- Set up SSL/TLS certificates for HTTPS
+- Regular security updates and monitoring
+- Backup strategies for databases
+
+#### Monitoring & Maintenance
+
+```bash
+# Check application status
+sudo docker-compose ps
+
+# View application logs
+sudo docker-compose logs -f app
+
+# Restart services
+sudo docker-compose restart
+
+# Update application
+git pull origin main
+sudo docker-compose up -d --build
+```
 
 ## 🌐 Environment Variables
 
