@@ -210,6 +210,10 @@ The application uses the following main entities:
 - **Documents** - Research files and project documentation
 - **Metadata** - File information and search indexes
 
+### Database Schema
+
+![Database Schema](images/schema.png)
+
 ### Sample Data
 
 The seeding process creates:
