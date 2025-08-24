@@ -446,7 +446,7 @@ src/
 Access interactive API documentation at:
 
 - **Local**: http://localhost:3000/api
-- **Production**: https://16.170.223.83:3000/api
+- **Production**: http://16.170.223.83:3000/api
 
 ### Features
 
