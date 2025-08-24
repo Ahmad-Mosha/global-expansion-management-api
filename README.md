@@ -468,7 +468,7 @@ Access interactive API documentation at:
 
 ### AWS EC2 Deployment
 
-The application is successfully deployed on AWS EC2 and accessible at: **https://16.170.223.83:3000/api**
+The application is successfully deployed on AWS EC2 and accessible at: **http://16.170.223.83:3000/api**
 
 #### Deployment Steps
 
