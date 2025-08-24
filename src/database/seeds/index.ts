@@ -3,6 +3,7 @@ import { seedAdmin } from './admin.seed';
 import { seedClients } from './clients.seed';
 import { seedVendors } from './vendors.seed';
 import { seedProjects } from './projects.seed';
+import { seedDocuments } from './documents.seed';
 import { User } from '../../users/entity/user.entity';
 import { Admin } from '../../admins/entity/admin.entity';
 import { Client } from '../../clients/entity/clients.entity';
@@ -41,6 +42,9 @@ async function runSeeds() {
     await seedVendors(dataSource);
     await seedClients(dataSource);
     await seedProjects(dataSource);
+
+    // Seed MongoDB documents
+    await seedDocuments();
 
     console.log('=== Seeding completed ===');
     console.log('Login: admin@expanders360.com / admin123456');

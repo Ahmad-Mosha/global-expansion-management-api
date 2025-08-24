@@ -195,6 +195,23 @@ ADMIN_EMAIL=your-admin-email@gmail.com
 
 ## 🗄️ Database Setup
 
+### Database Migrations
+
+The application uses TypeORM for MySQL migrations. Available migration commands:
+
+```bash
+# Generate a new migration (after entity changes)
+npm run migration:generate -- src/migrations/MigrationName
+
+# Run pending migrations
+npm run migration:run
+
+# Revert the last migration
+npm run migration:revert
+```
+
+**Note**: The current setup uses `synchronize: true` for development, which automatically creates/updates tables. For production, disable synchronization and use proper migrations.
+
 ### MySQL Schema
 
 The application uses the following main entities:
